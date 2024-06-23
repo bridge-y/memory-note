@@ -1,5 +1,5 @@
-import { AppendNote, Note, StorageAdapter } from "../StorageAdapter";
 import { Octokit } from "@octokit/core";
+import type { AppendNote, Note, StorageAdapter } from "../StorageAdapter";
 
 // $ wrangler secret put GITHUB_TOKEN
 // <INPUT_YOUR_API_TOKEN>

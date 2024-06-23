@@ -1,4 +1,4 @@
-import { Note, StorageAdapter } from "./StorageAdapter";
+import type { Note, StorageAdapter } from "./StorageAdapter";
 
 /**
  * Note stack Architecture

@@ -1,6 +1,6 @@
 import { jsx } from "hono/jsx";
-import { Note } from "../note/StorageAdapter";
 import type React from "react";
+import type { Note } from "../note/StorageAdapter";
 
 const List = ({ children, ...props }: React.JSX.IntrinsicElements["ul"]) => {
     return (

@@ -1,6 +1,6 @@
-import { AppendNote, Note, StorageAdapter } from "../StorageAdapter";
 import { Client } from "@notionhq/client";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { AppendNote, Note, StorageAdapter } from "../StorageAdapter";
 
 // :listId is notion database id
 export type createNotionDatabaseSimple = {

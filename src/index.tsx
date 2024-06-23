@@ -1,21 +1,25 @@
 import { Context, Hono } from "hono";
 import { cors } from "hono/cors";
-import { createMemoryNote, NoteArguments } from "./note/Note";
+import { NoteArguments, createMemoryNote } from "./note/Note";
+import { createGitHubIssueStorage } from "./note/adapters/GitHubIssue";
 import { createGitHubProjectStorage } from "./note/adapters/GitHubProject";
+import { createNotionStorage } from "./note/adapters/Notion";
 import { createCloudflareStorage } from "./note/adapters/cloudflare";
 import { HTML } from "./widget/render";
-import { createNotionStorage } from "./note/adapters/Notion";
 
-declare var MEMORY_NOTE_TOKEN: string;
-declare var BACKEND_SERVICE: "github" | "cloudflare" | "notion";
-declare var GITHUB_OWNER: string;
-declare var GITHUB_REPO: string;
-declare var GITHUB_PROJECT_ID: string;
+declare let MEMORY_NOTE_TOKEN: string;
+declare let BACKEND_SERVICE: "github" | "cloudflare" | "notion" | "github_issue";
+declare let GITHUB_TOKEN: string;
+declare let GITHUB_OWNER: string;
+declare let GITHUB_REPO: string;
+declare let GITHUB_PROJECT_ID: string;
+declare let GITHUB_ISSUE_LABEL: string;
 if (
     typeof BACKEND_SERVICE === "string" &&
     BACKEND_SERVICE !== "github" &&
     BACKEND_SERVICE !== "cloudflare" &&
-    BACKEND_SERVICE !== "notion"
+    BACKEND_SERVICE !== "notion" &&
+    BACKEND_SERVICE !== "github_issue"
 ) {
     throw new Error("BACKEND_SERVICE should github or cloudflare or notion");
 }
@@ -55,18 +59,29 @@ const newMemoryNote = (c: Context) => {
                 NOTION_FILTER_OPTIONS: c.env.NOTION_FILTER_OPTIONS
             })
         });
-    } else if (backendService === "cloudflare") {
+    }
+    if (backendService === "cloudflare") {
         return createMemoryNote({
             storage: createCloudflareStorage({
                 kvStorage: c.env.MEMORY_NOTE
             })
         });
-    } else if (backendService === "github") {
+    }
+    if (backendService === "github") {
         return createMemoryNote({
             storage: createGitHubProjectStorage({
                 owner: GITHUB_OWNER,
                 repo: GITHUB_REPO,
                 projectId: Number(GITHUB_PROJECT_ID)
+            })
+        });
+    }
+    if (backendService === "github_issue") {
+        return createMemoryNote({
+            storage: createGitHubIssueStorage({
+                token: c.env.GITHUB_TOKEN,
+                owner: c.env.GITHUB_OWNER,
+                repo: c.env.GITHUB_REPO
             })
         });
     }

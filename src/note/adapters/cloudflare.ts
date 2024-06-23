@@ -1,5 +1,5 @@
-import { AppendNote, Note, StorageAdapter } from "../StorageAdapter";
 import { uuid } from "@cfworker/uuid";
+import type { AppendNote, Note, StorageAdapter } from "../StorageAdapter";
 
 export const createCloudflareStorage = ({ kvStorage }: { kvStorage: KVNamespace }): StorageAdapter => {
     return {

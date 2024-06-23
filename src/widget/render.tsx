@@ -1,6 +1,6 @@
-import { Widget } from "./widget";
 import { html, raw } from "hono/html";
-import { Note } from "../note/StorageAdapter";
+import type { Note } from "../note/StorageAdapter";
+import { Widget } from "./widget";
 
 export const HTML = ({ notes }: { notes: Note[] }) => {
     return (
