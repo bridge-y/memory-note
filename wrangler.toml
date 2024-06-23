@@ -1,10 +1,6 @@
 name = "memory-note"
-type = "javascript"
-account_id = ""
-workers_dev = true
-route = ""
-zone_id = ""
 kv_namespaces = [
     { binding = "MEMORY_NOTE", id = "2191dab41f4b4f738d98493d4754b411", preview_id = "" }
 ]
-compatibility_date = "2021-09-26"
+compatibility_date = "2023-01-01"
+compatibility_flags = [ "nodejs_compat" ]
